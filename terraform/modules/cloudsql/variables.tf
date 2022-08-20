@@ -15,6 +15,7 @@ variable "database_version" {
 }
 
 variable "instance_tier" {
+  
   description = "Sql instance tier"
   default = "db-f1-micro"
 }
