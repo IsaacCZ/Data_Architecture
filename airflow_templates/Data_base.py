@@ -17,7 +17,7 @@ from datetime import datetime
 default_args = {
     'owner': 'isaac',
     'depends_on_past': False,    
-    'start_date': datetime(2022, 1, 1),
+    'start_date': datetime(2021, 10, 1),
     'email_on_failure': True,
     'email_on_retry': False,
     'retries': 2,
@@ -30,6 +30,12 @@ dag = DAG('insert_data_postgres',
           schedule_interval='@once',
           catchup=False)
 
+def file_path(relative_path):
+    dir = os.path.dirname(os.path.abspath(__file__))
+    split_path = relative_path.split("/")
+    new_path = os.path.join(dir, *split_path)
+    return new_path
+    
 
 def csv_to_postgres():
     #Open Postgres Connection
@@ -37,10 +43,11 @@ def csv_to_postgres():
     get_postgres_conn = PostgresHook(postgres_conn_id='postgres_default').get_conn()
     curr = get_postgres_conn.cursor()
     # CSV loading to table
-    with open("/behavior_analytics/data/user_purchase.csv", "r") as f:
+    with open(file_path("user_purchase.csv"), "r") as f:
         next(f)
         curr.copy_from(f, 'user_purchase', sep=",")
         get_postgres_conn.commit()
+
 
 
 
@@ -67,11 +74,9 @@ task1 = PostgresOperator(task_id = 'create_table',
 
 task2 = LocalFilesystemToGCSOperator(
         task_id="upload_file_src",
-        src="./behavior_analytics/data/user_purchase.csv",
+        src="user_purchase.csv",
         dst="user_purchase.csv",
         bucket="mexicothisismybucket123456789mexicomexicomexico",
-        dag=dag
-
     )
 
 
@@ -84,5 +89,5 @@ task3 = PythonOperator(task_id='csv_to_database',
 
 
 
-task1 >> task2 >> task3
+task1 >> task3 >> task2
 
