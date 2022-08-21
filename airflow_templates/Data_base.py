@@ -76,7 +76,7 @@ task2 = LocalFilesystemToGCSOperator(
         task_id="upload_file_src",
         src=file_path("user_purchase.csv"),
         dst="user_purchase.csv",
-        bucket="mexicothisismybucket123456789mexicomexicomexico",
+        bucket="mexicothisismybucket123456789mexicomexico",
         dag= dag
     )
 
