@@ -77,6 +77,7 @@ task2 = LocalFilesystemToGCSOperator(
         src="user_purchase.csv",
         dst="user_purchase.csv",
         bucket="mexicothisismybucket123456789mexicomexicomexico",
+        dag= dag
     )
 
 
