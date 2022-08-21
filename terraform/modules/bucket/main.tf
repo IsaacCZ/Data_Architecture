@@ -3,4 +3,5 @@ resource "google_storage_bucket" "default" {
   project = var.project_id
   storage_class = var.storage_class
   location = var.bucket_location
+  force_destroy = true
 }
