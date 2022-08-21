@@ -7,7 +7,7 @@ from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.hooks.postgres_hook import PostgresHook
 from datetime import timedelta
-from datetime import 
+from datetime import datetime
 
 # instantiating the Postgres Operator
 
@@ -15,33 +15,6 @@ dag = DAG('insert_data_postgres',
           default_args=default_args,
           schedule_interval='@once',
           catchup=False)
-
-with DAG(
-    dag_id="postgres_operator_dag",
-    start_date=datetime.datetime(2022, 1, 2),
-    schedule_interval="@once",
-    catchup=False,
-) as dag:
-    user_purchase_table = PostgresOperator(
-        task_id="create_user_purchase_table",
-        postgres_conn_id="postgres_default",
-        sql="""
-            CREATE TABLE IF NOT EXISTS user_purchase (
-            invoice_number varchar(20),
-            stock_code varchar(20),
-            detail varchar(1000),
-            quantity bigint,
-            inovoice_date timestamp,
-            unit_price numeric(8,3),
-            customer_id varchar(50),
-            country varchar(20));
-    
-          """
-        
-       )
-
-
-
 
 def file_path(relative_path):
     dir = os.path.dirname(os.path.abspath(__file__))
