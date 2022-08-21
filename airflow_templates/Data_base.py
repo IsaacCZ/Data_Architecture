@@ -6,6 +6,7 @@ from airflow import DAG
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.hooks.postgres_hook import PostgresHook
+from airflow.providers.google.cloud.transfers.gcs_to_gcs import GCSToGCSOperator
 from datetime import timedelta
 from datetime import datetime
 
@@ -40,6 +41,10 @@ def csv_to_postgres():
         curr.copy_from(f, 'user_purchase', sep=",")
         get_postgres_conn.commit()
 
+
+
+
+
 #Task 
 task1 = PostgresOperator(task_id = 'create_table',
                         sql=
@@ -59,7 +64,18 @@ task1 = PostgresOperator(task_id = 'create_table',
                         dag= dag)
 
 
-task2 = PythonOperator(task_id='csv_to_database',
+task2 = LocalFilesystemToGCSOperator(
+        task_id="upload_file_src",
+        src=user_purchase.csv,
+        dst=user_purchase.csv,
+        bucket=mexicothisismybucket123456789mexicomexicomexico,
+    )
+
+
+
+
+
+task3 = PythonOperator(task_id='csv_to_database',
                    provide_context=True,
                    python_callable=csv_to_postgres,
                    dag=dag)
@@ -67,6 +83,5 @@ task2 = PythonOperator(task_id='csv_to_database',
 
 
 
-task1 >> task2
-
+task1 >> task2 >> task3
 
