@@ -35,7 +35,7 @@ def csv_to_postgres():
     get_postgres_conn = PostgresHook(postgres_conn_id='postgres_default').get_conn()
     curr = get_postgres_conn.cursor()
     # CSV loading to table
-    with open("./behavior_analytics/data/user_purchase.csv", "r") as f:
+    with open("/behavior_analytics/data/user_purchase.csv", "r") as f:
         next(f)
         curr.copy_from(f, 'user_purchase', sep=",")
         get_postgres_conn.commit()
