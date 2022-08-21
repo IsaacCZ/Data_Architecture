@@ -17,7 +17,7 @@ from datetime import datetime
 default_args = {
     'owner': 'isaac',
     'depends_on_past': False,    
-    'start_date': datetime(2021, 10, 1),
+    'start_date': datetime(2022, 1, 1),
     'email_on_failure': True,
     'email_on_retry': False,
     'retries': 2,
