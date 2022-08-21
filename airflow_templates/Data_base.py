@@ -12,6 +12,20 @@ from datetime import datetime
 
 # instantiating the Postgres Operator
 
+default_args = {
+    'owner': 'isaac',
+    'depends_on_past': False,    
+    'start_date': datetime(2021, 10, 1),
+    'email_on_failure': True,
+    'email_on_retry': False,
+    'retries': 2,
+    'retry_delay': timedelta(minutes=1),
+}
+
+
+
+
+
 dag = DAG('insert_data_postgres',
           default_args=default_args,
           schedule_interval='@once',
