@@ -23,19 +23,11 @@ default_args = {
 }
 
 
-
-
-
 dag = DAG('insert_data_postgres',
           default_args=default_args,
           schedule_interval='@once',
           catchup=False)
 
-def file_path(relative_path):
-    dir = os.path.dirname(os.path.abspath(__file__))
-    split_path = relative_path.split("/")
-    new_path = os.path.join(dir, *split_path)
-    return new_path
 
 def csv_to_postgres():
     #Open Postgres Connection
@@ -43,13 +35,10 @@ def csv_to_postgres():
     get_postgres_conn = PostgresHook(postgres_conn_id='postgres_default').get_conn()
     curr = get_postgres_conn.cursor()
     # CSV loading to table
-    with open(file_path("user_purchase.csv"), "r") as f:
+    with open(file_path("./behavior_analytics/data/user_purchase.csv"), "r") as f:
         next(f)
         curr.copy_from(f, 'user_purchase', sep=",")
         get_postgres_conn.commit()
-
-
-
 
 #Task 
 task1 = PostgresOperator(task_id = 'create_table',
@@ -79,3 +68,5 @@ task2 = PythonOperator(task_id='csv_to_database',
 
 
 task1 >> task2
+
+
