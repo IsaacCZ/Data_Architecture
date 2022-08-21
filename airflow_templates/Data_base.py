@@ -9,6 +9,7 @@ from airflow.hooks.postgres_hook import PostgresHook
 from datetime import timedelta
 from datetime import datetime
 
+
 # instantiating the Postgres Operator
 
 dag = DAG('insert_data_postgres',
