@@ -22,6 +22,7 @@ default_args = {
     'email_on_retry': False,
     'retries': 2,
     'retry_delay': timedelta(minutes=1),
+    'start_date': airflow.utils.dates.days_ago(1)
 }
 
 
