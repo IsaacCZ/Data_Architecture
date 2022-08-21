@@ -31,3 +31,13 @@ module "cloudsql" {
   db_username       = var.db_username
   db_password       = var.db_password
 }
+
+module "bucket" {
+  source = "./modules/bucket"
+  
+ storage_class = var.storage_class
+ project_id = var.project_id
+ bucket_name = var.bucket_name
+ bucket_location =var.bucket_location
+ 
+  }

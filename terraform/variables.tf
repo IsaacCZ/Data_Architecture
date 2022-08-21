@@ -55,3 +55,19 @@ variable "db_password" {
   description = "Password credentials for root user"
   default     = "dbpassword"
 }
+
+# Bucket
+
+variable "bucket_name" {
+  type = string
+  description = "Bucket name"
+  default     = "mexicothisismybucket123456789mexicomexicomexico"
+}
+
+variable storage_class {
+  description = "class"
+}
+
+variable "bucket_location" {
+      type = string
+}
