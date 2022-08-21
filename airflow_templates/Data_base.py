@@ -67,12 +67,10 @@ task1 = PostgresOperator(task_id = 'create_table',
 
 task2 = LocalFilesystemToGCSOperator(
         task_id="upload_file_src",
-        src=user_purchase.csv,
-        dst=user_purchase.csv,
-        bucket=mexicothisismybucket123456789mexicomexicomexico,
+        src="user_purchase.csv",
+        dst="user_purchase.csv",
+        bucket="mexicothisismybucket123456789mexicomexicomexico",
     )
-
-
 
 
 
