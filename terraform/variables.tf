@@ -61,7 +61,7 @@ variable "db_password" {
 variable "bucket_name" {
   type = string
   description = "Bucket name"
-  default     = "mexicothisismybucket123456789mexicomexicomexico"
+  default     = "mexicothisismybucket123456789mexicomexico"
 }
 
 variable storage_class {
